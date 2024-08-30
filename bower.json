@@ -1,0 +1,15 @@
+{
+  "name": "adapt-xapiEvents",
+  "version": "1.0.0",
+  "framework": ">=5",
+  "homepage": "",
+  "bugs": "",
+  "extension": "xapiEvents",
+  "displayName": "xAPI Events",
+  "description": "An extension that allows you to send xAPI statements for Adapt events",
+  "main": "/js/adapt-xapiEvents.js",
+  "keywords": ["adapt-plugin", "adapt-extension"],
+  "license": "GPL-3.0",
+  "targetAttribute": "_xapiEvents",
+  "private": true
+}
