@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import Adapt from 'core/js/adapt';
 import XAPI from 'extensions/adapt-contrib-xapi/js/XAPI';
 
@@ -18,14 +19,29 @@ class XAPIEvents extends Backbone.Controller {
     // add listener for any event you want to track
 
     this.listenTo(Adapt, {
-      'pageLevelProgress:percentageCompleteChange': this.onPercentageCompleteChanged
+      'pageLevelProgress:percentageCompleteChange': this.onPercentageCompleteChanged,
+      'reaction:submitted': this.onReactionSubmitted
     });
+  }
+
+  onReactionSubmitted({ feedback, rating }) {
+    const statement = {
+      actor: this.xapi.get('actor'),
+      verb: ADL.verbs.commented,
+      object: this.xapi.getCourseActivity(),
+      result: {
+        response: feedback,
+        score: {
+          raw: rating
+        }
+      }
+    };
+    this.xapi.sendStatement(statement);
   }
 
   onPercentageCompleteChanged(percentageComplete) {
     const statement = {
       actor: this.xapi.get('actor'),
-      // eslint-disable-next-line no-undef
       verb: ADL.verbs.progressed,
       object: this.xapi.getCourseActivity(),
       result: {
